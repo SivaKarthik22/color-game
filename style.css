@@ -1,19 +1,21 @@
 *{
     box-sizing: border-box;
     margin: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 body{
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #F1F0E8;
+    background-color: #F4E0AF;
 }
 .container{
     background-color: white;
     padding: 50px;
     min-width: 40vw;
     border-radius: 15px;
+    outline: 3.2px solid black;
 }
 #clr-code{
     text-align: center;
@@ -36,23 +38,29 @@ body{
     color: white;
     text-shadow: 0.5px 0.5px 1.5px hsla(0, 0%, 0%, 0.75);
     border-radius: 8px;
+    outline: 3px solid black;
 }
 .bottom{
     display: flex;
     justify-content: flex-end;
 }
 #reload{
-    font-size: 16px;
+    font-size: 18px;
     padding: 8px 23px;
     cursor: pointer;
     border-radius: 8px;
+    outline: 1px solid black;
+    background-color: #FC8F54;
+}
+#reload:hover{
+    background-color: #ff8041;
 }
 .status{
     font-size: 23px;
     margin: 40px 0 25px 0;
 }
 .correct{
-    color: green;
+    color: #019209;
     font-weight: bold;
 }
 .wrong{
