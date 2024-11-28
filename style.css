@@ -1,0 +1,61 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #F1F0E8;
+}
+.container{
+    background-color: white;
+    padding: 50px;
+    min-width: 40vw;
+    border-radius: 15px;
+}
+#clr-code{
+    text-align: center;
+    font-size: 40px;
+    margin: 15px 0 40px 0;
+}
+#boxes{
+    display: flex;
+    gap: 35px;
+    justify-content: center;
+}
+.box{
+    width: 100px;
+    height: 100px;
+    background-color: lightgrey;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 0.5px 0.5px 1.5px hsla(0, 0%, 0%, 0.75);
+    border-radius: 8px;
+}
+.bottom{
+    display: flex;
+    justify-content: flex-end;
+}
+#reload{
+    font-size: 16px;
+    padding: 8px 23px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.status{
+    font-size: 23px;
+    margin: 40px 0 25px 0;
+}
+.correct{
+    color: green;
+    font-weight: bold;
+}
+.wrong{
+    color: red;
+    font-weight: bold;
+}
