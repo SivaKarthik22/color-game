@@ -28,8 +28,8 @@ body{
     justify-content: center;
 }
 .box{
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     background-color: lightgrey;
     cursor: pointer;
     display: flex;
@@ -39,6 +39,7 @@ body{
     text-shadow: 0.5px 0.5px 1.5px hsla(0, 0%, 0%, 0.75);
     border-radius: 8px;
     outline: 3px solid black;
+    font-size: 18px;
 }
 .bottom{
     display: flex;

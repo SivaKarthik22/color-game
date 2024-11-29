@@ -2,7 +2,6 @@ const colorCodeTitle = document.querySelector("#clr-code");
 const boxes = document.querySelector("#boxes");
 const resultStatus = document.querySelector(".status");
 const reloadBtn = document.querySelector("#reload");
-
 const scoreCard = document.querySelector(".score-card");
 const livesCard = document.querySelector(".lives-card");
 const highScoreCard = document.querySelector(".high-score-card");
@@ -10,7 +9,6 @@ const highScoreCard = document.querySelector(".high-score-card");
 let luckyNum;
 let colors = new Array(3);
 let charSet = "0123456789abcdef";
-
 let score = 0;
 let lives = 3;
 let gameOver = true;
@@ -19,14 +17,14 @@ if(!localStorage.getItem("highScore"))
     localStorage.setItem("highScore", 0);
 highScoreCard.innerText = localStorage.getItem("highScore");
 
-newGame();
+nextTurn();
 
 reloadBtn.addEventListener("click", ()=>{
     gameOver = true;
-    newGame();
+    nextTurn();
 });
 
-function newGame(){
+function nextTurn(){
     for(let j=0; j<3; j++){
         colors[j] = "";
         for(let i=1; i<=6; i++){
@@ -60,33 +58,13 @@ function newGame(){
         gameOver = false;
         resultStatus.innerHTML = "Find the color with the given hexa code";
 
-        scoreCard.innerText = score;
-        livesCard.innerText = "";
-        for(let i=1; i<= lives; i++){
-            livesCard.innerHTML += `<i class="fa-solid fa-heart"></i> `;
-        }
+        updateUI_ScoreAndLife();
     }
-
 }
 
 function checkerFn(event){
     if(event.target.classList[0] !== "box")
         return;
-
-    if(event.target.dataset.color === colors[luckyNum]){
-        resultStatus.innerText = "Correct Answer!";
-        resultStatus.classList.remove("wrong");
-        resultStatus.classList.add("correct");
-        score++;
-    }
-    else{
-        resultStatus.innerText = "Wrong Answer";
-        resultStatus.classList.remove("correct");
-        resultStatus.classList.add("wrong");
-        lives--;
-    }
-
-    boxes.removeEventListener("click", checkerFn);
 
     for(let i=0; i<3; i++){
         boxes.children[i].innerText = colors[i];
@@ -95,35 +73,56 @@ function checkerFn(event){
 
     boxes.children[luckyNum].style.boxShadow = `${colors[luckyNum]} 0px 7px 29px 0px`;
 
+    boxes.removeEventListener("click", checkerFn);
+
+    if(event.target.dataset.color === colors[luckyNum]){
+        score++;
+        resultStatus.innerHTML = "Correct Answer!";
+        resultStatus.classList.remove("wrong");
+        resultStatus.classList.add("correct");
+        
+        setTimeout(nextTurn, 1000);
+    }
+    else{
+        lives--;
+        if(lives === 0){
+            gameOver = true;
+            if(score > localStorage.getItem("highScore")){
+                localStorage.setItem("highScore", score );
+                resultStatus.innerHTML = 
+                `Game Over <i class="fa-regular fa-face-smile-beam"></i>
+                <span>  New High Score: ${score}</span>`;
+                resultStatus.classList.remove("wrong");
+                resultStatus.classList.add("correct");
+                document.querySelector(".status span").style.color = "black";
+            }
+            else{
+                resultStatus.innerHTML = 
+                `Game Over <i class="fa-regular fa-face-frown-open"></i>
+                <span>  Your score: ${score}</span>`;
+                 resultStatus.classList.remove("correct");
+                 resultStatus.classList.add("wrong");
+                 document.querySelector(".status span").style.color = "black";
+            }       
+            highScoreCard.innerText = localStorage.getItem("highScore");
+            reloadBtn.innerText = "Play Again";
+        }
+        else{
+            resultStatus.innerHTML = "Wrong Answer";
+            resultStatus.classList.remove("correct");
+            resultStatus.classList.add("wrong");
+
+            setTimeout(nextTurn, 1000);
+        }
+    }
+
+    updateUI_ScoreAndLife();    
+}
+
+function updateUI_ScoreAndLife(){
     scoreCard.innerText = score;
     livesCard.innerText = "";
     for(let i=1; i<= lives; i++){
         livesCard.innerHTML += `<i class="fa-solid fa-heart"></i> `;
-    }
-
-    if(lives === 0){
-        gameOver = true;
-        if(score > localStorage.getItem("highScore")){
-            localStorage.setItem("highScore", score );
-            resultStatus.innerHTML = 
-            `Game Over <i class="fa-regular fa-face-smile-beam"></i>
-            <span>  New High Score: ${score}</span>`;
-            resultStatus.classList.remove("wrong");
-            resultStatus.classList.add("correct");
-            document.querySelector(".status span").style.color = "black";
-        }
-        else{
-            resultStatus.innerHTML = 
-            `Game Over <i class="fa-regular fa-face-frown-open"></i>
-            <span>  Your score: ${score}</span>`;
-             resultStatus.classList.remove("correct");
-             resultStatus.classList.add("wrong");
-             document.querySelector(".status span").style.color = "black";
-        }       
-        highScoreCard.innerText = localStorage.getItem("highScore");
-        reloadBtn.innerText = "Play Again";
-    }
-    else{
-        setTimeout(newGame, 1000);
     }
 }
