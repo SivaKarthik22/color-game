@@ -50,8 +50,9 @@ body{
     padding: 8px 23px;
     cursor: pointer;
     border-radius: 8px;
-    outline: 1px solid black;
+    outline: 3px solid black;
     background-color: #FC8F54;
+    border: none;
 }
 #reload:hover{
     background-color: #ff8041;
